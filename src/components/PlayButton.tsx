@@ -32,15 +32,13 @@ export function PlayButton({
         boxShadow: `0 2px 16px color-mix(in srgb, ${glow} 26%, transparent), inset 0 1px 0 rgba(255,255,255,0.32)`,
       }}
       whileHover={{
-        y: -3,
-        x: 1,
-        rotate: -0.4,
+        y: -2,
+        scale: 1.03,
         boxShadow: `0 6px 28px color-mix(in srgb, ${glow} 42%, transparent), 0 0 20px color-mix(in srgb, #ffc947 25%, transparent), inset 0 1px 0 rgba(255,255,255,0.45)`,
       }}
       whileTap={{
-        y: 1,
-        x: 0,
-        rotate: 0,
+        y: 0,
+        scale: 0.975,
         boxShadow: `0 2px 10px color-mix(in srgb, ${glow} 20%, transparent), inset 0 2px 4px rgba(0,0,0,0.15)`,
       }}
       transition={{ type: 'spring', stiffness: 420, damping: 24, mass: 0.75 }}

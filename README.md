@@ -1,39 +1,20 @@
 # Games Dashboard (React + Vite)
 
-## Auto-deploy on git push (recommended)
+## Cloudflare Workers deploy
 
-Push to **`main`** → GitHub Actions runs **`.github/workflows/deploy-cloudflare.yml`** → build + `wrangler deploy`.
-
-### One-time GitHub secrets
-
-Repo **Settings → Secrets and variables → Actions → New repository secret**:
-
-| Secret | Where to get it |
-|--------|------------------|
-| `CLOUDFLARE_API_TOKEN` | [Cloudflare API Tokens](https://dash.cloudflare.com/profile/api-tokens) → **Create Token** → template **Edit Cloudflare Workers** (or custom: Account + Workers Scripts edit) |
-| `CLOUDFLARE_ACCOUNT_ID` | Cloudflare dashboard → any zone/workers URL, or **Workers & Pages** → right sidebar **Account ID** |
-
-Then push this repo to `main`. Check **Actions** tab for the deploy run.
-
-Local deploy: `npm run deploy`
-
-### Cloudflare Workers Builds (dashboard deploy)
-
-Workers **already runs** `npm clean-install`. You must **create `dist/`** before Wrangler uploads.
-
-In **Workers → gamesdashboard → Builds → Settings**:
+In **Workers Builds → Settings**, use:
 
 | Setting | Value |
 |--------|--------|
-| **Root directory** | `/` |
-| **Build command** | *(empty)* or `npm run build` |
-| **Deploy command** | **`npm run deploy`** |
+| **Root directory** | `/` (repo root — where `package.json` is) |
+| **Build command** | *(optional)* `npm ci && npm run build` |
+| **Deploy command** | **`npm ci && npm run deploy`** |
 
-Do **not** use **`npx wrangler deploy` alone** — there is no `dist/` folder until `npm run build` runs.
+Use **`npm run deploy`**, not `npx wrangler deploy` alone — Wrangler needs the `dist/` folder from `npm run build`.
 
-`wrangler.toml` includes `[build] command = "npm run build"` so `npx wrangler deploy` also works **after** you push this file, if you prefer Deploy = `npx wrangler deploy`.
+The Vite app outputs to `dist/`. `wrangler.toml` serves those files as a SPA.
 
-Pick **one** auto-deploy path: GitHub Actions **or** Workers Builds (not both), unless you want duplicate deploys.
+Local deploy: `npm run deploy` (build + wrangler).
 
 ---
 
